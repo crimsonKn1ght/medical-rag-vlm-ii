@@ -27,7 +27,9 @@ from .report import aggregate_run
 
 log = get_logger("medvlm.eval")
 
-CONFIG_DIR = Path(__file__).resolve().parents[3] / "configs"
+REPO_ROOT = Path(__file__).resolve().parents[3]
+CONFIG_DIR = REPO_ROOT / "configs"
+DEFAULT_OUT = REPO_ROOT / "results"
 
 
 def _load_items(args, datasets_cfg):
@@ -153,7 +155,8 @@ def build_argparser() -> argparse.ArgumentParser:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--no-semantic", action="store_true", help="skip sentence-transformer similarity")
     p.add_argument("--no-report-metrics", action="store_true", help="skip RadEval (CheXbert/RadGraph/GREEN)")
-    p.add_argument("--out", default="results")
+    p.add_argument("--out", default=str(DEFAULT_OUT),
+                   help="output root (default: <repo>/results, regardless of cwd)")
     p.add_argument("--models-config", default=str(CONFIG_DIR / "models.yaml"))
     p.add_argument("--datasets-config", default=str(CONFIG_DIR / "datasets.yaml"))
     return p
