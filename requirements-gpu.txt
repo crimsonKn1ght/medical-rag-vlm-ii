@@ -5,6 +5,10 @@
 transformers>=4.49,<5
 accelerate
 datasets
+# RunPod/cloud GPU images commonly set HF_HUB_ENABLE_HF_TRANSFER=1; without this
+# package, downloads from non-Xet repos (e.g. CheXagent) hard-fail. Unused/harmless
+# if the flag is not set. Alternatively export HF_HUB_ENABLE_HF_TRANSFER=0.
+hf_transfer
 pillow
 numpy
 pandas
