@@ -36,7 +36,7 @@ def summarize(rows: List[Dict[str, Any]], report_scores: Optional[Dict[str, Any]
         lines += [
             "## VQA correctness",
             "",
-            f"- closed accuracy (EM): {_fmt(_safe_mean([r.get('correct') for r in closed]))} "
+            f"- closed accuracy (yes/no): {_fmt(_safe_mean([r.get('correct') for r in closed]))} "
             f"(n={len(closed)})",
             f"- open token-F1: {_fmt(_safe_mean([r.get('correct') for r in openq]))} (n={len(openq)})",
             f"- open semantic similarity: {_fmt(_safe_mean([r.get('semantic_sim') for r in openq]))}",

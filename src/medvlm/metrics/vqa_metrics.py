@@ -30,6 +30,24 @@ def exact_match(pred: str, gold: str) -> float:
     return float(normalize(pred) == normalize(gold))
 
 
+_YESNO = {"yes", "no"}
+
+
+def closed_correct(pred: str, gold: str) -> float:
+    """Score yes/no questions on the model's polarity, not strict full-string EM.
+
+    Models rarely emit a bare 'yes'/'no' — they hedge ("Yes, there is a small
+    effusion"), so strict exact match scores near-zero even when the answer is
+    right. Take the first yes/no token the prediction emits and compare it to the
+    gold. Falls back to 0.0 if the prediction never commits to a polarity.
+    """
+    gold_n = normalize(gold)
+    for tok in normalize(pred).split():
+        if tok in _YESNO:
+            return float(tok == gold_n)
+    return 0.0
+
+
 def token_f1(pred: str, gold: str) -> float:
     p = normalize(pred).split()
     g = normalize(gold).split()
@@ -74,8 +92,9 @@ def score_vqa(pred: str, item, use_semantic: bool = True) -> Dict[str, Any]:
         "answer_type": item.answer_type,
         "exact_match": em,
         "token_f1": f1,
-        # Primary correctness signal: EM for closed, token-F1 for open.
-        "correct": em if is_closed else f1,
+        # Primary correctness signal: polarity match for closed, token-F1 for open.
+        # (Strict EM is kept above as `exact_match` for reference.)
+        "correct": closed_correct(pred, gold) if is_closed else f1,
     }
     if use_semantic and not is_closed:
         sim = _semantic_sim(pred, gold)
