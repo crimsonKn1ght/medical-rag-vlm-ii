@@ -35,6 +35,14 @@ class CheXagentAdapter(VLMAdapter):
             self.hf_id, torch_dtype=torch_dtype, trust_remote_code=True
         ).to(self.device)
         self.model.eval()
+
+        # CheXagent's generation config leaves pad_token_id unset, so transformers
+        # logs "Setting `pad_token_id` to `eos_token_id`" on every generate() call.
+        # Pin it once to eos to keep long-run logs readable.
+        eos_id = self.processor.tokenizer.eos_token_id
+        for cfg in (self.generation_config, getattr(self.model, "generation_config", None)):
+            if cfg is not None and cfg.pad_token_id is None:
+                cfg.pad_token_id = eos_id
         return self
 
     def _build_inputs(self, image: Image, prompt: str):
