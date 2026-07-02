@@ -1,5 +1,8 @@
 # Full stack for the RunPod GPU box (install torch via setup_runpod.sh first).
-transformers>=4.49
+# Cap below 5: CheXagent's trust_remote_code modeling imports symbols removed in
+# transformers 5.x (e.g. find_pruneable_heads_and_indices from pytorch_utils).
+# LLaVA-Med (HF-native Llava class) works on 4.x too, so 4.x satisfies both.
+transformers>=4.49,<5
 accelerate
 datasets
 pillow

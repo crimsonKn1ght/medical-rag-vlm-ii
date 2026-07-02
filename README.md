@@ -69,7 +69,10 @@ Year 2 (retrieval) / Year 3 (comparison grounding + calibrated abstention).
   which stock transformers rejects).
 - **CheXagent**: custom modeling code (`trust_remote_code=True`); the generation
   format can drift by revision — verify `models/chexagent.py` against the model card
-  if generation errors.
+  if generation errors. Requires **transformers < 5** — its remote code imports
+  `find_pruneable_heads_and_indices` from `transformers.pytorch_utils`, removed in
+  5.x (`requirements-gpu.txt` pins this). If you already installed 5.x, downgrade
+  with `pip install "transformers>=4.49,<5"`.
 - **RadEval**: confirm the call signature against the installed README; GREEN
   downloads a 7B judge (GPU recommended).
 - **SLAKE / IU-Xray**: loaders auto-detect columns across HF mirrors; verify on
