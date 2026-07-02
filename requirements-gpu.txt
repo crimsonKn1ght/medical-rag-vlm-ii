@@ -1,0 +1,15 @@
+# Full stack for the RunPod GPU box (install torch via setup_runpod.sh first).
+transformers>=4.49
+accelerate
+datasets
+pillow
+numpy
+pandas
+pyyaml
+sentencepiece
+protobuf
+einops
+sentence-transformers
+# Unified radiology report metrics: F1CheXbert, F1RadGraph, GREEN.
+# Confirm the call signature against the installed README (API varies by version).
+radeval

@@ -1,0 +1,19 @@
+# Dataset registry. `task` selects the loader + metric path.
+# Schemas for SLAKE / IU-Xray are auto-detected by the loaders (column names vary
+# across HF mirrors) — verify on first run and adjust the *_columns hints if needed.
+
+vqa_rad:
+  hf_id: flaviagiammarino/vqa-rad
+  task: vqa
+  default_split: test
+
+slake:
+  hf_id: BoKelvin/SLAKE
+  task: vqa
+  default_split: test
+  language: en          # filter to English QA pairs
+
+iu_xray:
+  hf_id: dz-osamu/IU-Xray
+  task: report
+  default_split: test

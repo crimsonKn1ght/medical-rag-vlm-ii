@@ -1,0 +1,10 @@
+# Local authoring + CPU smoke test (torch CPU assumed already installed).
+# Keep this list minimal — the heavy stack lives in requirements-gpu.txt.
+transformers>=4.49
+accelerate
+datasets
+pillow
+numpy
+pandas
+pyyaml
+sentence-transformers

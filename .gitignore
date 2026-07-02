@@ -1,0 +1,32 @@
+# Run outputs
+results/
+*.jsonl
+!tests/**/*.jsonl
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Envs
+.venv/
+venv/
+env/
+
+# Model / HF caches
+*.pt
+*.bin
+*.safetensors
+.cache/
+hf_cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local Claude Code settings (personal overrides)
+.claude/settings.local.json

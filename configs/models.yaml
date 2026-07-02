@@ -1,0 +1,22 @@
+# Model registry. `adapter` maps to a class in medvlm.models.registry.
+# dtype is used on GPU; CPU runs fall back to float32 automatically.
+
+dummy:                       # offline pipeline test — no weights, no download
+  adapter: dummy
+  hf_id: ""
+
+smolvlm:                     # tiny general VLM — CPU-friendly smoke test / general baseline
+  adapter: smolvlm
+  hf_id: HuggingFaceTB/SmolVLM-256M-Instruct
+  dtype: float32
+
+llava_med:                   # HF-native LLaVA-Med (avoids the llava_mistral model_type issue)
+  adapter: llava_med
+  hf_id: chaoyinshe/llava-med-v1.5-mistral-7b-hf
+  dtype: bfloat16
+
+chexagent:                   # Stanford chest-Xray foundation model (custom code)
+  adapter: chexagent
+  hf_id: StanfordAIMI/CheXagent-8b
+  dtype: bfloat16
+  trust_remote_code: true
